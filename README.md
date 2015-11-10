@@ -2,7 +2,9 @@
 git pull/clone webhook python script
 
 You must change git user/pass in file:
+
 git_usr_name = 'READ_ONLY_USER'
+
 git_password = 'READ_ONLY_PASS'
 
 
