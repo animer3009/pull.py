@@ -1,0 +1,16 @@
+# Listen port. Default 8000.
+#PORT=8000
+# Git branch. Default master.
+#BRANCH='master'
+# Destination directory. Default /var/www/. !!! / in end !!!
+#DESTINATION_DIR='/var/www/'
+# Project Address for initial clone (optional).
+#GITLAB='github.com/animer3009/pull.py'
+# Username for initial clone (optional).
+#USERNAME='READ_ONLY'
+# PAssword for initial clone (optional).
+#PASSWORD='Password'
+# Project name without namespace and .git suffix. Necessary option! Must be set!
+#PROJECT='pull_py'
+# Optional extra Arguments. Set immutable attributes on DESTINATION_DIR. Default no.
+#ARGS='-t n'

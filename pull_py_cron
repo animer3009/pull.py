@@ -1,0 +1,2 @@
+30 19  * * *    root    /sbin/start pull_py > /dev/null 2>&1
+30 07  * * *    root    /sbin/stop pull_py > /dev/null 2>&1

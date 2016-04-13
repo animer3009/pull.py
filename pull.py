@@ -13,8 +13,8 @@ from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
  
  
 # you can edit
-git_usr_name = 'READ_ONLY_USER'
-git_password = 'READ_ONLY_PASS'
+git_usr_name = 'READ_ONLY'
+git_password = 'ahputh3shi'
 log_dir = '/var/log/'
 log_file_name = os.path.basename(__file__) + '.log' #will be real_py_file_name .log
 default_www_dir = "/var/www/"
@@ -139,3 +139,6 @@ if __name__ == '__main__':
         log_file.write("ERROR M.B. " + str(e) + " " + time.strftime("%m-%d-%Y %H:%M:%S") + "\n")
         log_file.close()
         print str(e)
+
+
+

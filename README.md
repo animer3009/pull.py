@@ -1,17 +1,15 @@
-# pull.py
-git pull/clone webhook python script
+-h help
+-p port დეფოლტად 8000
+-w სასურველი www დირექტორია. დეფოლტად /var/www/ და ბრანჩის სახელი. დირექტორიის path-ი აუცილებლად /-ით უნდა დამთავრდეს!
+-t დირექტორიაზე immutable ატრიბუტის დასმა რეკურსიულად. დეფოლტად n
+ 
+თუ მიუთითებთ დირექტორიას რომელიც უკვე არსებობს, აუცილებლად უნდა დახვდეს იქ .git
+ 
+-c დეფოლტად n
+ 
+y უშვებს git clean -f -d... ანუ თუ სერვერზეა ფაილი რომელიც გითზე არ მაქვს მაშინ წაშლის ასეთ ფაილს/დირექტორიას. თუ ვერსიათა შორის კონფლიქტია, წაშლის სერვერზე და აიტანს გითიდან. საფრთხილო რამეა. თუ ისეთი აპლიკაციაა რომელიც ფტპ-ზე იტვირთავს რაღაცეებს, მაშინ ამ ატვირთულებს წაშლის გითი.
+ 
+ლოგი, არის /var/log - ში და ქვია პითონის ფაილის სახელს მიმატებული .log
+ 
+თუ გადაარქმევთ ფაილს სახელს, შეიქმნება ახალი ლოგი ახალი სახელით.
 
-You must change git user/pass in file:
-
-git_usr_name = 'READ_ONLY_USER'
-
-git_password = 'READ_ONLY_PASS'
-
-
-On server must me installed python and git.
-
-locate script - /usr/local/bin
-
-for run on startup add in /etc/rc.local as background process (&)
-
-run script with python... use -h for get help.

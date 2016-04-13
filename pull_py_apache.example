@@ -1,0 +1,28 @@
+# Example config for Apache 2.2
+
+<Directorymatch "^/.*/\.git+/">
+	Order deny,allow
+	Deny from all
+</Directorymatch>
+
+<Files ~ "^\.git">
+	Order allow,deny
+	Deny from all 
+</Files>
+
+
+# Example config for Apache 2.4
+
+<Directorymatch "^/.*/\.git+/">
+	Require all denied
+</Directorymatch>
+
+<Files ~ "^\.git">
+	Require all denied
+</Files>
+
+# Example config for Nginx 1.1
+	location /.git {
+		 autoindex off;
+		 root  /var/www/eunomia_git/.git/;
+	}

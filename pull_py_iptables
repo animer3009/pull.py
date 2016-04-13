@@ -1,0 +1,16 @@
+#!/bin/bash
+# Check Iptables status
+FILE="/sbin/iptables"
+if [ -f "$FILE" ];
+then
+   echo "Package $FILE exist."
+else
+   echo "Package $FILE does not exist" >&2
+   export DEBIAN_FRONTEND=noninteractive
+   apt-get install iptables -y -o DPkg::options::="--force-confdef" -o Dpkg::Options::="--force-confold"
+   iptables -A INPUT -p tcp -s 10.10.120.159/32 --dport 8000 -j ACCEPT
+   iptables -A INPUT -p tcp --dport 8000 -j DROP
+   apt-get install iptables-persistent -y -o DPkg::options::="--force-confdef" -o Dpkg::Options::="--force-confold"
+ fi
+
+exit 0
