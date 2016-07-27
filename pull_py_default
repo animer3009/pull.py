@@ -4,13 +4,17 @@
 #BRANCH='master'
 # Destination directory. Default /var/www/. !!! / in end !!!
 #DESTINATION_DIR='/var/www/'
+# Necessary variable for systemd!
+DESTCONTENT=$(ls -A $DESTINATION_DIR)
 # Project Address for initial clone (optional).
-#GITLAB='github.com/animer3009/pull.py'
+#GITLAB='gitlab.napr.gov.ge/zjavakhishvili/pull-py.git'
 # Username for initial clone (optional).
 #USERNAME='READ_ONLY'
 # PAssword for initial clone (optional).
-#PASSWORD='Password'
+#PASSWORD='ahputh3shi'
 # Project name without namespace and .git suffix. Necessary option! Must be set!
 #PROJECT='pull_py'
 # Optional extra Arguments. Set immutable attributes on DESTINATION_DIR. Default no.
 #ARGS='-t n'
+# If immutable attributes are used (ARGS = -t y) under Linux with systemd, CHATTR variable must be set to 1.
+CHATTR=0

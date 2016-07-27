@@ -1,11 +1,18 @@
 #!/bin/bash
 
+INIT=$(ps -p 1 |tail -n 1 |awk '{print $4}')
+
 install() {
 cp pull.py /usr/local/bin/
 chmod 750 /usr/local/bin/pull.py
 cp pull_py_default /etc/default/pull_py
+if [ "$INIT" = 'init' ]; then 
 cp pull_py_upstart.conf /etc/init/pull_py.conf
 cp pull_py_upstart.override /etc/init/pull_py.override
+elif [ "$INIT" = 'systemd' ]; then
+cp pull_py_systemd /etc/systemd/system/pull_py.service
+systemctl disable pull_py.service
+fi
 cp pull_py_cron /etc/cron.d/pull_py
 service cron reload
 bash pull_py_iptables
@@ -22,9 +29,15 @@ chmod 750 /usr/local/bin/pull.py
 setfacl -m u:"$SETUID":rwx /usr/local/bin/pull.py
 setfacl -m u:"$SETUID":rwx /var/log
 cp pull_py_default /etc/default/pull_py
+if [ "$INIT" = 'init' ]; then 
 cp pull_py_upstart.conf /etc/init/pull_py.conf
 sed -i "s/#setuid/setuid\ $SETUID/" /etc/init/pull_py.conf 
 cp pull_py_upstart.override /etc/init/pull_py.override
+elif [ "$INIT" = 'systemd' ]; then
+cp pull_py_systemd /etc/systemd/system/pull_py.service
+sed -i "s/Environment=UPRIV=root/Environment=UPRIV=$SETUID/" /etc/systemd/system/pull_py.service
+systemctl disable pull_py.service
+fi
 cp pull_py_cron /etc/cron.d/pull_py
 service cron reload
 bash pull_py_iptables
@@ -34,12 +47,19 @@ echo -e "\e[31mAlso Remembrer to restrict access to .git directory in web-apps d
 }
 
 uninstall() {
+if [ "$INIT" = 'init' ]; then 
 stop pull_py 2>/dev/null
-rm /usr/local/bin/pull.py
-rm /etc/default/pull_py
 rm /etc/init/pull_py.conf
 rm /etc/init/pull_py.override
+elif [ "$INIT" = 'systemd' ]; then
+systemctl stop pull_py.service 2>/dev/null
+rm /etc/systemd/system/pull_py.service
+systemctl daemon-reload
+fi
+rm /usr/local/bin/pull.py
+rm /etc/default/pull_py
 rm /etc/cron.d/pull_py
+rm /var/log/pull.py.log
 service cron reload
 echo -e "\e[32mPull.py successfuly uninstalled.\e[m"
 }
