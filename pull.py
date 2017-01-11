@@ -53,7 +53,7 @@ class Webhook(BaseHTTPRequestHandler):
             rm_rule2 = '/.*'
  
         git_url = data['repository']['git_http_url'].replace("://",("://" + git_usr_name + ":" + git_password + "@"))
-        git_branch_name = re.match('refs/heads/([0-9a-zA-Z]+)$', data['ref']).group(1)
+        git_branch_name = re.match('refs/heads/([0-9a-zA-Z_]+)$', data['ref']).group(1)
  
         # print git_url
         # print git_branch_name

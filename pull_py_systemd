@@ -7,11 +7,12 @@ After=network.target
 EnvironmentFile=/etc/default/pull_py
 Environment=UPRIV=root
 Type=simple
+KillMode=process
 ExecStartPre=/bin/bash -c "if [ -z ${DESTINATION_DIR} ]; then echo -e 'DESTINATION_DIR variable are not set in /etc/default/pull_py.'; fi"
 ExecStartPre=/bin/bash -c "if [ ! -d ${DESTINATION_DIR} ]; then mkdir -p ${DESTINATION_DIR}; chown ${UPRIV}:${UPRIV} ${DESTINATION_DIR}; fi"
-ExecStartPre=/bin/bash -c "if [ -z ${DESTCONTENT} ] && [ -n ${USERNAME} ] && [ -n ${PASSWORD} ] && [ -n {$GITLAB} ]; then su -c - ${UPRIV} 'git clone https://${USERNAME}:${PASSWORD}@${GITLAB} ${DESTINATION_DIR}'; else echo -e 'Not all necessary variables are set in /etc/default/pull_py or destination not empty.'; fi"
-ExecStart=/bin/bash -c "su -c - ${UPRIV} '/usr/bin/python /usr/local/bin/pull.py -p ${PORT} -w ${DESTINATION_DIR} -b ${BRANCH} -r ${PROJECT} -c y $ARGS'"
-ExecStartPost=/bin/bash -c "if [ ${CHATTR} = 1 ]; then chattr -i -R ${DESTINATION_DIR}; su -c - ${UPRIV} 'cd ${DESTINATION_DIR} && git pull https://${USERNAME}:${PASSWORD}@${GITLAB}'; chattr +i -R ${DESTINATION_DIR}; else cd ${DESTINATION_DIR} && /usr/bin/git pull https://${USERNAME}:${PASSWORD}@${GITLAB}; fi"
+ExecStartPre=/bin/bash -c "if [ -z ${DESTCONTENT} ] && [ -n ${USERNAME} ] && [ -n ${PASSWORD} ] && [ -n {$GITLAB} ]; then sudo -u ${UPRIV} git clone https://${USERNAME}:${PASSWORD}@${GITLAB} ${DESTINATION_DIR} --branch ${BRANCH}; else echo -e 'Not all necessary variables are set in /etc/default/pull_py or destination not empty.'; fi"
+ExecStart=/bin/bash -c "sudo -u ${UPRIV} /usr/bin/python /usr/local/bin/pull.py -p ${PORT} -w ${DESTINATION_DIR} -b ${BRANCH} -r ${PROJECT} -c y $ARGS"
+ExecStartPost=/bin/bash -c "if [ ${CHATTR} = 1 ]; then chattr -i -R ${DESTINATION_DIR}; sudo -u ${UPRIV} cd ${DESTINATION_DIR} && git pull https://${USERNAME}:${PASSWORD}@${GITLAB}; chattr +i -R ${DESTINATION_DIR}; else cd ${DESTINATION_DIR} && /usr/bin/git pull https://${USERNAME}:${PASSWORD}@${GITLAB}; fi"
 Restart=on-failure
 
 [Install]
