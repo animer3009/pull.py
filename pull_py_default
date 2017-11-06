@@ -7,11 +7,11 @@
 # Necessary variable for systemd!
 DESTCONTENT=$(ls -A $DESTINATION_DIR)
 # Project Address for initial clone (optional).
-#GITLAB='gitlab.example.ge/zjavakhishvili/pull-py.git'
+#GITLAB='gitlab.napr.gov.ge/zjavakhishvili/pull-py.git'
 # Username for initial clone (optional).
 #USERNAME='READ_ONLY'
 # PAssword for initial clone (optional).
-#PASSWORD='asfa435fdsafsd2d'
+#PASSWORD='ahputh3shi'
 # Project name without namespace and .git suffix. Necessary option! Must be set!
 #PROJECT='pull_py'
 # Optional extra Arguments. Set immutable attributes on DESTINATION_DIR. Default no.
